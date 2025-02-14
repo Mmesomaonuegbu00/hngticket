@@ -58,7 +58,6 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
     const cloudApiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;
     const cloudApiSecret = import.meta.env.VITE_CLOUDINARY_API_SECRET;
   
-    // Debugging: Log environment variables
     console.log("Cloud Name:", cloudName);
     console.log("Cloud API Key:", cloudApiKey);
     console.log("Cloud API Secret:", cloudApiSecret);
