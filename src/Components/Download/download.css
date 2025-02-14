@@ -62,7 +62,7 @@ line-height: 150%;
 
 
 .ticket-container {
-  background: url("/subtrac.png") no-repeat center;
+  background: url("/Subtract.svg") no-repeat center;
   background-size: contain;
   width: 100%;
   min-width: 250px;
@@ -208,6 +208,9 @@ line-height: 150%;
 
   .head3 h2 {
     font-size: 24px;
+  }
+  .head4 h3 {
+    font-size: 14x;
   }
 
 
