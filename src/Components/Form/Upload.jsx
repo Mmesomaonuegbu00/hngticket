@@ -41,52 +41,60 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (!selectedFile) {
       setError("Please upload an image.");
       return;
     }
-
+  
     if (!formData.fullName || !formData.email || !formData.message) {
       setError("All fields are required.");
       return;
     }
-
+  
     setIsUploading(true);
+  
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-
+    const cloudApiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;
+    const cloudApiSecret = import.meta.env.VITE_CLOUDINARY_API_SECRET;
+  
+    // Debugging: Log environment variables
+    console.log("Cloud Name:", cloudName);
+    console.log("Cloud API Key:", cloudApiKey);
+    console.log("Cloud API Secret:", cloudApiSecret);
+  
+    if (!cloudName || !cloudApiKey || !cloudApiSecret) {
+      setError("Cloudinary credentials are missing.");
+      setIsUploading(false);
+      return;
+    }
+  
     const timestamp = Math.floor(new Date().getTime() / 1000);
-    const cloudinaryApiSecret = import.meta.env.VITE_CLOUDINARY_API_SECRET;
-    const signatureString = `timestamp=${timestamp}${cloudinaryApiSecret}`;
+    const signatureString = `timestamp=${timestamp}${cloudApiSecret}`;
     const signature = sha1(signatureString);
-
+  
     const uploadData = new FormData();
     uploadData.append("file", selectedFile);
     uploadData.append("timestamp", timestamp);
-    uploadData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
+    uploadData.append("api_key", cloudApiKey);
     uploadData.append("signature", signature);
-
+  
     try {
       const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: "POST",
         body: uploadData,
       });
+  
       const data = await response.json();
       if (response.ok) {
         console.log("Upload successful", data);
-        console.log("Cloud name:", cloudName);
-
-        if (!cloudName) {
-          setError("Cloud name is missing or invalid.");
-          return;
-        }
         const savedData = {
           ...formData,
           profileImageUrl: data.secure_url,
         };
         localStorage.setItem("savedFormData", JSON.stringify(savedData));
         localStorage.setItem("formComplete", "true");
-
+  
         setFormData({
           fullName: "",
           email: "",
@@ -104,9 +112,10 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
       console.error("Error during upload:", error);
       setError("An error occurred during upload. Please try again.");
     }
-
+  
     setIsUploading(false);
   };
+  
 
   return (
     <div className="form-tab">
