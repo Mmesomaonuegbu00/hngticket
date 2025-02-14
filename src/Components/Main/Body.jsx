@@ -24,7 +24,9 @@ const Body = () => {
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    if (event.target.value.trim() !== "") setError("");
+    if (event.target.value.trim() !== "") {
+      setError("");
+    }
   };
 
   const nextStep = () => {
@@ -32,7 +34,9 @@ const Body = () => {
       setError("Please select a ticket type and enter the number of tickets.");
       return;
     }
-    if (step < 3) setStep(step + 1);
+    if (step < 3) {
+      setStep(step + 1);
+    }
   };
 
   const handleDownload = () => {
@@ -72,37 +76,56 @@ const Body = () => {
               <div className="ticket-type">
                 <p>Select Ticket Type:</p>
                 <div className="ticket-card">
-                  {["Free", "VIP", "VVIP"].map((type) => (
-                    <button key={type} className={`card ${formData.vipSelection === type ? "selected" : ""}`} onClick={() => handleTicketSelect(type)}>
-                      <h6>{type === "Free" ? "Free" : "$150"}</h6>
-                      <p>{type} Access</p>
-                      <span>20/52</span>
-                    </button>
-                  ))}
+                  <button className={`card1 ${formData.vipSelection === "Free" ? "selected" : ""}`} onClick={() => handleTicketSelect("Free")}>
+                    <h6>Free</h6>
+                    <p>Regular Access</p>
+                    <span>20/52</span>
+                  </button>
+                  <button className={`card2 ${formData.vipSelection === "VIP" ? "selected" : ""}`} onClick={() => handleTicketSelect("VIP")}>
+                    <h6>$150</h6>
+                    <p>VIP Access</p>
+                    <span>20/52</span>
+                  </button>
+                  <button className={`card2 ${formData.vipSelection === "VVIP" ? "selected" : ""}`} onClick={() => handleTicketSelect("VVIP")}>
+                    <h6>$150</h6>
+                    <p>VVIP Access</p>
+                    <span>20/52</span>
+                  </button>
                 </div>
               </div>
 
               <div className="number">
                 <p>Number of Tickets</p>
-                <input type="number" name="tickets" value={formData.tickets} onChange={handleChange} />
+                <input
+                  type="number"
+                  name="tickets"
+                  value={formData.tickets}
+                  onChange={handleChange}
+                />
                 {error && <p className="error-message">{error}</p>}
               </div>
 
               <div className="ticket-button">
                 <button className="button1">Cancel</button>
-                <button className="button2" onClick={nextStep}>Next</button>
+                <button type="submit" className="button2" onClick={nextStep}>
+                  Next
+                </button>
               </div>
             </>
           )}
 
-          {step === 2 && <UploadProfilePhoto nextStep={nextStep} error={error} setError={setError} />}
+          {step === 2 && (
+            <div className="step-two">
+              <UploadProfilePhoto nextStep={nextStep} error={error} setError={setError} />
+            </div>
+          )}
 
           {step === 3 && (
             <div>
               <Download ticketRef={ticketRef} />
               <div className="ticket-button">
                 <button className="button1" onClick={() => setStep(1)}>Book Another Ticket</button>
-                <button className="button2" onClick={handleDownload}>Download Ticket</button>
+                <button type="submit" className="button2" onClick={handleDownload}>Download Ticket</button>
               </div>
             </div>
           )}
