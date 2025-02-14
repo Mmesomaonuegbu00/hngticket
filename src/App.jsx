@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Ticket from "./Components/pages/Ticket";
 import Navbar from "./Components/Navbar/Navbar";
-import About from "./Components/pages/about";
+import About from "./Components/pages/AboutUs";
 import Event from "./Components/Home/Event";
 
 function App() {
