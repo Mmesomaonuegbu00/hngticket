@@ -3,6 +3,7 @@ import cloud from '../../assets/upload-icon.png';
 import './upload.css';
 import sha1 from 'js-sha1';
 
+
 const UploadProfilePhoto = ({ nextStep, error, setError }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -27,7 +28,7 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
     if (file) {
       setSelectedFile(file);
       setImagePreview(URL.createObjectURL(file));
-      setError(""); 
+      setError("");
     } else {
       setError("Please upload an image.");
     }
@@ -35,7 +36,7 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    setError(""); 
+    setError("");
   };
 
   const handleSubmit = async (event) => {
@@ -52,28 +53,33 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
     }
 
     setIsUploading(true);
+    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
-    const timestamp = Math.floor(new Date().getTime() / 1000); 
+    const timestamp = Math.floor(new Date().getTime() / 1000);
     const cloudinaryApiSecret = import.meta.env.VITE_CLOUDINARY_API_SECRET;
     const signatureString = `timestamp=${timestamp}${cloudinaryApiSecret}`;
     const signature = sha1(signatureString);
 
     const uploadData = new FormData();
-    uploadData.append("file", selectedFile); 
-    uploadData.append("timestamp", timestamp); 
-    uploadData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY); 
-    uploadData.append("signature", signature); 
+    uploadData.append("file", selectedFile);
+    uploadData.append("timestamp", timestamp);
+    uploadData.append("api_key", import.meta.env.VITE_CLOUDINARY_API_KEY);
+    uploadData.append("signature", signature);
 
     try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: "POST",
         body: uploadData,
       });
-
       const data = await response.json();
       if (response.ok) {
         console.log("Upload successful", data);
+        console.log("Cloud name:", cloudName);
 
+        if (!cloudName) {
+          setError("Cloud name is missing or invalid.");
+          return;
+        }
         const savedData = {
           ...formData,
           profileImageUrl: data.secure_url,
@@ -88,8 +94,8 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
         });
         setImagePreview(null);
         setSelectedFile(null);
-        setError(""); 
-        nextStep(); 
+        setError("");
+        nextStep();
       } else {
         console.error("Upload failed", data);
         setError("Upload failed. Please try again.");
@@ -101,7 +107,7 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
 
     setIsUploading(false);
   };
-    
+
   return (
     <div className="form-tab">
       <div className="upload-div">
