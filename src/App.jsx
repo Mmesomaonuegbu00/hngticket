@@ -1,22 +1,21 @@
-import React from 'react'
-import './App.css'
-import Navbar from './Components/Navbar/Navbar'
-import Body from './Components/Main/Body'
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Ticket from "./Components/pages/Ticket";
+import Navbar from "./Components/Navbar/Navbar";
+import About from "./Components/pages/about";
+import Event from "./Components/Home/Event";
 
 function App() {
- 
-
-  return (
-    <>
-      <div>
-        <Navbar/>
-        <Body/>
-       
-      </div>
-      
-    </>
-  )
+    return (
+        <Router>
+            <Navbar/>
+          
+            <Routes>
+                <Route path="/" element={  <Event/>} />
+                <Route path="/about" element={<About/>} />
+                <Route path="/tickets" element={<Ticket/>} />
+            </Routes>
+        </Router>
+    );
 }
 
-export default App
+export default App;

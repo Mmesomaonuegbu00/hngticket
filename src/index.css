@@ -8,11 +8,13 @@
 
 body {
     animation: fadeIn 2s;
+    height: 100%;
     background:
         radial-gradient(52.52% 32.71% at 50% 97.66%, rgba(36, 160, 181, 0.3) 0%, rgba(36, 160, 181, 0) 100%),
         linear-gradient(0deg, #02191D, #02191D);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-repeat: no-repeat;
 }
 
 /* #root {

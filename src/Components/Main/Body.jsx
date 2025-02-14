@@ -18,6 +18,19 @@ const Body = () => {
     localStorage.setItem("vipSelection", formData.vipSelection);
   }, [formData]);
 
+  const getStepTitle = () => {
+    switch (step) {
+      case 1:
+        return "Ticket Selection";
+      case 2:
+        return "Attendee Details";
+      case 3:
+        return "Ready";
+      default:
+        return "Ticket Selection";
+    }
+  };
+
   const handleTicketSelect = (type) => {
     setFormData({ ...formData, vipSelection: type });
   };
@@ -54,7 +67,7 @@ const Body = () => {
     <div className="contain">
       <div className="body">
         <div className="ticket-head">
-          <h2>Ticket Selection</h2>
+          <h2>{getStepTitle()}</h2>
           <p>Step {step}/3</p>
         </div>
 
@@ -116,7 +129,7 @@ const Body = () => {
 
           {step === 2 && (
             <div className="step-two">
-              <UploadProfilePhoto nextStep={nextStep} error={error} setError={setError} />
+              <UploadProfilePhoto nextStep={nextStep} setStep={setStep} error={error} setError={setError} />
             </div>
           )}
 
