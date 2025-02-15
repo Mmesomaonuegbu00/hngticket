@@ -54,7 +54,7 @@ const Download = ({ ticketRef }) => {
                     <td className="column"><label>Ticket Type:</label><div className="value">{data.vipSelection}</div></td>
                   </tr>
                   <tr className="row textarea">
-                    <td colSpan="2" className="textarea"><label>Message</label><div className="value">{data.message}</div></td>
+                    <td colSpan="2"><label>Special request?</label><div className="value textarea">{data.message}</div></td>
                   </tr>
                 </tbody>
               </table>

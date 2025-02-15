@@ -43,12 +43,13 @@
 
 .head4 p {
   color: #FFF;
-font-family: Roboto;
-font-size: 10px;
-font-style: normal;
-font-weight: 400;
-line-height: 150%;
+  font-family: Roboto;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
 }
+
 .main-ticket {
   display: flex;
   padding: 32px 21px;
@@ -84,7 +85,7 @@ line-height: 150%;
   max-width: 200px;
   height: auto;
   position: relative;
-  
+
 }
 
 .ticket {
@@ -94,7 +95,7 @@ line-height: 150%;
   width: 100%;
   max-width: 260px;
   height: 446px;
-  padding: 14px;
+  padding: 8px;
   flex-shrink: 0;
   gap: 20px;
   align-items: center;
@@ -126,7 +127,7 @@ line-height: 150%;
 
 
 .table {
-  width:fit-content;
+  width: fit-content;
   border-collapse: collapse;
   display: flex;
   padding: 2px;
@@ -158,11 +159,16 @@ line-height: 150%;
   padding: 4px;
   word-wrap: break-word;
   border: 1px solid #133D44;
- text-align: left;
+  text-align: left;
 }
 
 .column:last-child {
   border-right: none;
+}
+
+tbody tr .textarea {
+  max-height: 30px;
+  overflow: hidden;
 }
 
 .row label {
@@ -186,6 +192,8 @@ line-height: 150%;
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+  overflow: hidden;
+
 
 }
 
@@ -195,9 +203,9 @@ line-height: 150%;
     padding: 10px;
     margin-bottom: 10px;
   }
-  
 
- 
+
+
 }
 
 
@@ -209,6 +217,7 @@ line-height: 150%;
   .head3 h2 {
     font-size: 24px;
   }
+
   .head4 h3 {
     font-size: 14x;
   }
@@ -217,10 +226,10 @@ line-height: 150%;
 }
 
 @media screen and (max-width: 511px) {
-.ticket {
-height: 420px;
-  margin-top: 1rem;
-}
+  .ticket {
+    height: 420px;
+    margin-top: 1rem;
+  }
 }
 
 @media screen and (max-width: 400px) {
@@ -238,7 +247,7 @@ height: 420px;
   .head3 {
     margin-top: -1rem;
   }
-  
+
 
 }
 
@@ -247,19 +256,20 @@ height: 420px;
   .barcode {
     bottom: 10px;
   }
-  
+
 
 }
+
 @media screen and (max-width: 306px) {
 
   .ticket {
     height: 370px;
     margin-top: 3rem;
   }
-.barcode {
-  bottom: 20px;
-}
-  
+
+  .barcode {
+    bottom: 20px;
+  }
+
 
 }
-
