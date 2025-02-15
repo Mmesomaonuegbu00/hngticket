@@ -5,11 +5,15 @@ import UploadProfilePhoto from "../Form/Upload";
 import html2canvas from "html2canvas";
 
 const Body = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(() => {
+    return Number(localStorage.getItem("currentStep")) || 1;
+  });
+
   const [formData, setFormData] = useState({
     tickets: localStorage.getItem("tickets") || "",
     vipSelection: localStorage.getItem("vipSelection") || "",
   });
+
   const [error, setError] = useState("");
   const ticketRef = useRef(null);
 
@@ -48,7 +52,9 @@ const Body = () => {
       return;
     }
     if (step < 3) {
-      setStep(step + 1);
+      const newStep = step + 1;
+      setStep(newStep);
+      localStorage.setItem("currentStep", newStep);
     }
   };
 
@@ -137,7 +143,14 @@ const Body = () => {
             <div>
               <Download ticketRef={ticketRef} />
               <div className="ticket-button">
-                <button className="button1" onClick={() => setStep(1)}>Book Another Ticket</button>
+                <button className="button1" onClick={() => {
+                  localStorage.clear(); 
+                  window.location.reload();
+                }}>
+                  Book Another Ticket
+                </button>
+
+
                 <button type="submit" className="button2" onClick={handleDownload}>Download Ticket</button>
               </div>
             </div>

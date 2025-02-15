@@ -230,12 +230,13 @@
     height: 110px;
     gap: 8px;
     padding: 12px;
-    border: 2px solid #12464E;
+    border: 2px solid #197686;
     border-radius: 12px;
     border-width: 1px;
-    background: #12464E;
+    background: none;
     color: #FFF;
     text-align: left;
+
     
 
 }
@@ -261,6 +262,7 @@
 }
 .ticket-card .card2:hover{
     background: #12464E;
+    
 }
 
 .number {

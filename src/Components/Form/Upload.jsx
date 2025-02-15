@@ -43,13 +43,13 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
       setTimeout(() => setError(""), 3000);
       return;
     }
-    
+
     if (!formData.fullName || !formData.email || !formData.message) {
       setError("All fields are required.");
       setTimeout(() => setError(""), 3000);
       return;
     }
-    
+
     setIsUploading(true);
 
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -131,11 +131,35 @@ const UploadProfilePhoto = ({ nextStep, error, setError }) => {
           <input type="email" name="email" placeholder="hello@avioflagos.io" value={formData.email} onChange={handleChange} required />
           <br />
           <label htmlFor="message">About the project</label><br />
-          <textarea name="message" placeholder="Textarea" value={formData.message} onChange={handleChange} required />
+          <textarea
+            name="message"
+            placeholder="Textarea"
+            value={formData.message}
+            onChange={(e) => {
+              if (e.target.value.length <= 50) {
+                setFormData({ ...formData, message: e.target.value });
+                setError(""); 
+              } else {
+                setError("You can only enter up to 50 characters.");
+              }
+            }}
+            required
+          />
+          <p>{formData.message.length} / 50 characters</p>
+          {error && <p className="error-message" style={{ color: "red" }}>{error}</p>}
+
+
+
           <br />
           <div className="ticket-button">
             <button className="button1" onClick={() => setStep(1)}>Back</button>
-            <button type="submit" className="button2" disabled={!imagePreview || isUploading}>Get My Free Ticket</button>
+            <button
+              type="submit"
+              className="button2"
+              disabled={formData.message.trim().split(/\s+/).filter(Boolean).length > 50}
+            >
+              Get My Free Ticket
+            </button>
           </div>
         </form>
       </div>
